@@ -1,4 +1,4 @@
-FROM raspbian/stretch
+FROM debian:stretch
 MAINTAINER Justin Schwartzbeck <justinmschw@gmail.com>
 
 ENV SQUID_USER=squid
@@ -45,7 +45,7 @@ bash coreutils dash debianutils diffutils dpkg e2fsprogs findutils grep gzip hos
 libevent-pthreads-* libevent-dev ncurses-bin perl-base sed login sysvinit-utils tar bsdutils \
 mount util-linux libc6-dev libc-dev gcc g++ make dpkg-dev autotools-dev debhelper dh-autoreconf dpatch \
 libclamav-dev libpcre3-dev zlib1g-dev pkg-config libssl1.1 libssl-dev libevent-pthreads-2.0-5 libtommath1 \
-libevent-core-2.0-5
+libevent-core-2.0-5 iptables
 
 
 # Start e2guardian
@@ -72,8 +72,12 @@ RUN cd /tmp/e2guardian-$VERSION && make \
 && apt remove -y --allow-remove-essential --purge curl unzip sed libevent-dev libc6-dev libc-dev g++ make dpkg-dev autotools-dev debhelper dh-autoreconf dpatch libclamav-dev libpcre3-dev zlib1g-dev libssl-dev \
 && rm -rf /var/lib/apt/lists/* && rm -Rf /tmp/*
 
+COPY e2guardian.conf /etc/e2guardian/e2guardian.conf
 
 EXPOSE 3128
+# For transparent proxy we are using the following ports
+EXPOSE 3130
+EXPOSE 3131
 
 ADD ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
