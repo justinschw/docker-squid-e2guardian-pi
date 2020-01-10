@@ -24,6 +24,17 @@ if [ $SAFESEARCH ]; then
 	echo "216.239.38.120 www.google.com" >> /etc/hosts
 fi
 
+
+cleanup() {
+    iptables -t nat -D OUTPUT -p tcp --syn --dport 80 -j REDIRECT --to-port 3130
+    iptables -t nat -D PREROUTING -p tcp --syn --dport 80 -j REDIRECT --to-port 3130
+    iptables -t nat -D OUTPUT -p tcp --syn --dport 443 -j REDIRECT --to-port 3131
+    iptables -t nat -D PREROUTING -p tcp --syn --dport 443 -j REDIRECT --to-port 3131
+    iptables -t nat -D OUTPUT -m owner --uid-owner squid -j RETURN
+}
+trap cleanup EXIT
+cleanup
+
 if [ $TRANSPARENT ]; then
     iptables -t nat -I OUTPUT 1 -p tcp --syn --dport 80 -j REDIRECT --to-port 3130
     iptables -t nat -I PREROUTING -p tcp --syn --dport 80 -j REDIRECT --to-port 3130
