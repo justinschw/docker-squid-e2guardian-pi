@@ -8,7 +8,7 @@ ENV VERSION 5.3
 ENV OS debian
 
 RUN apt-get update && \
-    apt-get -qq -y install openssl libssl1.0-dev build-essential wget curl net-tools dnsutils tcpdump && \
+    apt-get -qq -y install openssl libssl1.0-dev build-essential wget curl net-tools dnsutils tcpdump dnsmasq && \
     apt-get clean
 
 # squid 3.5.27
