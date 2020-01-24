@@ -21,7 +21,7 @@ RUN wget http://www.squid-cache.org/Versions/v3/3.5/squid-3.5.27.tar.gz && \
 
 RUN mkdir -p $SQUID_DIR/var/lib
 RUN mkdir -p $SQUID_DIR/ssl
-RUN $SQUID_DIR/libexec/ssl_crtd -c -s $SQUID_DIR/var/lib/ssl_db
+RUN $SQUID_DIR/libexec/security_file_certgen -c -s $SQUID_DIR/var/lib/ssl_db
 RUN mkdir -p $SQUID_DIR/var/cache
 RUN useradd $SQUID_USER -U -b $SQUID_DIR
 RUN chown -R ${SQUID_USER}:${SQUID_USER} $SQUID_DIR
