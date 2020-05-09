@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM raspbian/stretch
 MAINTAINER Justin Schwartzbeck <justinmschw@gmail.com>
 
 ENV SQUID_USER=squid
