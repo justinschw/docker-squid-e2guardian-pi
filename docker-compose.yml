@@ -4,7 +4,7 @@ version: '2'
 services:
   e2guardian-squid:
     build:
-      context: ./docker-squid-e2guardian-pi
+      context: .
       dockerfile: Dockerfile
     ports:
       - "3128:3128"
