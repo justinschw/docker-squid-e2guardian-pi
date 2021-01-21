@@ -1,0 +1,14 @@
+# docker-compose.yml
+version: '2'
+
+services:
+  e2guardian-squid:
+    build:
+      context: ./docker-squid-e2guardian-pi
+      dockerfile: Dockerfile
+    ports:
+      - "3128:3128"
+    volumes:
+      - ./e2guardian/lists:/etc/e2guardian/lists
+      - ./squid/conf:/etc/squid
+    restart: always
